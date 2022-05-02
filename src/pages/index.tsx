@@ -15,7 +15,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>My DAPP</title>
+        <title>Big Cheeze</title>
       </Head>
 
       <div className="div-block-1201">
