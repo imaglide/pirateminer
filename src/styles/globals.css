@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+/* From Public Directory */
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('/fonts/Ubuntu.ttf');
+  font-style: medium;
+  font-weight: normal;
+  font-display: swap;
+}
