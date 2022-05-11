@@ -1,0 +1,8 @@
+.heading-1 {
+    width: 500px;
+    height: 500px;
+    position: fixed;
+    border-radius: 50%;
+    bottom: 130px;
+    z-index: 200;
+  }

@@ -4,11 +4,11 @@ import { Web3Provider } from '@ethersproject/providers'
 import { Contract } from "@ethersproject/contracts";
 import { formatEther } from "@ethersproject/units"
 import { ethers } from 'ethers'
-import { Text } from '@chakra-ui/react'
 import useSWR from 'swr'
 import { ERC20ABI as abi } from "../abi/ERC20ABI"
 import { isAddress } from 'ethers/lib/utils';
-import ETHBalance from './ETHBalance';
+import { Container,  Text, Button, SimpleGrid, Flex, Input, Divider, Grid, GridItem } from '@chakra-ui/react'
+
 
 interface Props {
     addressContract: string
@@ -128,6 +128,7 @@ export default function ReadERC20(props: Props) {
     let displayBalance: number = 0
     let displayRewards: number = 0
     let displayCheese: number = 0
+    let displayMiners: string = "0";
 
     if (balance)
         displayBalance = balance;
@@ -135,34 +136,47 @@ export default function ReadERC20(props: Props) {
         displayRewards = rewards;
     if (cheese)
         displayCheese = cheese;
+    if (miners)
+        displayMiners = miners;
 
 
-    return (<div>
-        <div className="columns w-row">
-            <div className="column-2 w-col w-col-6 w-col-small-6 w-col-tiny-6"><label htmlFor="name" className="field-label-3">Contract Balance:</label></div>
-            <div className="w-col w-col-6 w-col-small-6 w-col-tiny-6"><label htmlFor="email-2" className="field-label">{parseFloat(formatEther(displayBalance)).toFixed(3)} {symbol}</label></div>
-        </div>
-        <div className="columns w-row">
-            <div className="column-2 w-col w-col-6 w-col-small-6 w-col-tiny-6"><label htmlFor="email" className="field-label-4">Your Cheeze:</label></div>
-            <div className="w-col w-col-6 w-col-small-6 w-col-tiny-6"><label htmlFor="email" className="field-label">{displayCheese.toLocaleString()} {symbol}</label></div>
-        </div>
-        <div className="columns w-row">
-            <div className="column-2 w-col w-col-6 w-col-small-6 w-col-tiny-6"><label htmlFor="email" className="field-label-5">Mice:</label></div>
-            <div className="w-col w-col-6 w-col-small-6 w-col-tiny-6"><label htmlFor="email" className="field-label">{miners}</label></div>
-        </div>
-        <div className="columns w-row">
-            <div className="column-2 w-col w-col-6 w-col-small-6 w-col-tiny-6"><label htmlFor="email" className="field-label-5">Your Pending Rewards:</label></div>
-            <div className="w-col w-col-6 w-col-small-6 w-col-tiny-6"><label htmlFor="email" className="field-label">{parseFloat(formatEther(displayRewards)).toFixed(6)}</label></div>
-        </div>
-        <div className="columns w-row">
-            <div className="column-2 w-col w-col-6 w-col-small-6 w-col-tiny-6"><label htmlFor="email" className="field-label-5"></label></div>
-            <div className="w-col w-col-6 w-col-small-6 w-col-tiny-6"><label htmlFor="email" className="field-label"><button name="Compound" onClick={onClickClaimRewards}>Claim Rewards</button></label></div>
-        </div>
-        <div className="columns-2 w-row">
-            <div className="w-col w-col-6"><input type="number" className="w-input" name="Amount" data-name="Amount" placeholder="10.0" id="Amount" /></div>
-            <div className="w-col w-col-6"><input type="submit" value="Buy" data-wait="Please wait..." className="w-button" onClick={onClickBuyMice} /> <ETHBalance /></div>
-        </div>
 
-    </div>
+    return (
+    
+
+<Container>
+<SimpleGrid columns={2} spacingX='40px' spacingY='20px'>
+  <Flex  height='80px' justifyContent="right">
+        <Text fontSize='2xl'>Contract Balance</Text></Flex>
+  <Flex height='80px'justifyContent="right"> 
+        <Text fontSize='2xl'>{parseFloat(formatEther(displayBalance)).toFixed(3)} BNB</Text>
+  </Flex>
+  <Flex height='80px' justifyContent="right"> 
+        <Text fontSize='2xl'>Your The Cheeze</Text></Flex>
+  <Flex height='80px'justifyContent="right"> 
+        <Text fontSize='2xl'justifyContent="right">{displayCheese.toLocaleString()} Cheez</Text>
+  </Flex>
+  <Flex height='80px' justifyContent="right"> 
+        <Text fontSize='2xl'>Pending Awards</Text>
+  </Flex>
+  <Flex  height='80px' justifyContent="right"> 
+        <Text fontSize='2xl' >{parseFloat(formatEther(displayRewards)).toFixed(6)} BNB</Text>
+  </Flex>
+</SimpleGrid>
+<Divider style={{ background: 'black' }} variant="middle" />
+<SimpleGrid columns={1}  >
+  <Flex height='80px' justifyContent="right">
+        <Input variant='filled' placeholder='0 BNB'/>
+        </Flex>
+  <Flex height='80px'justifyContent="right"> 
+        <Button isFullWidth="true" onClick={onClickBuyMice}>Buy Cheeze</Button>
+  </Flex>
+ 
+</SimpleGrid>
+
+</Container>
+    
+    
+    
     )
 }

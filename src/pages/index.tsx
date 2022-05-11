@@ -9,6 +9,7 @@ import ReadERC20 from '../components/ReadERC20';
 import About from '../components/about'
 import Faq from '../components/faq'
 
+
 const addressContract='0x55BABe225652faD1747d8642621c6A20E360E919'
 
 const Home: NextPage = () => {
