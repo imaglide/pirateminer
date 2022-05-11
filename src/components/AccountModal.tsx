@@ -16,7 +16,6 @@ import {
   } from "@chakra-ui/react";
   import { ExternalLinkIcon, CopyIcon } from "@chakra-ui/icons";
   import { useEthers } from "@usedapp/core";
-  import Identicon from "./Identicon";
 
 export default function AccountModal() {
     const { account, deactivate } = useEthers();
@@ -76,7 +75,7 @@ export default function AccountModal() {
                 </Button>
               </Flex>
               <Flex alignItems="center" mt={2} mb={4} lineHeight={1}>
-                <Identicon />
+                
                 <Text
                   color="white"
                   fontSize="xl"
