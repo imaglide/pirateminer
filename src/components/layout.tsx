@@ -1,7 +1,9 @@
 // src/components/layout.tsx
 import React, { ReactNode } from 'react'
-import { Text, Center, Container, useColorModeValue } from '@chakra-ui/react'
+import { Text, Center, Container, useColorModeValue, Box } from '@chakra-ui/react'
 import Header from './header'
+
+import Background from '../../src/images/BCBackground.png'
 
 type Props = {
   children: ReactNode
@@ -11,10 +13,16 @@ export function Layout(props: Props) {
   return (
     <div>
       <Header />
+      <Box 
+        backgroundImage="url(/img/BCBackground.png)"
+        backgroundPosition="center"
+        backgroundRepeat="no-repeat"
+      >
+      
       <Container maxW="container.md" py='8'>
         {props.children}
       </Container>
-      <div>
+        </Box>
         <div className="footer wf-section">
         <div className="div-block-1200 center">
             <p className="body white center">© BIG CHEEZE. All Rights Reserved.</p>
@@ -31,14 +39,6 @@ export function Layout(props: Props) {
             </div>
         </div>
     </div>
-    <script
-        src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=6267045bbcf1451f09d3ed15"
-        type="text/javascript"
-        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-        crossOrigin="anonymous"
-    ></script>
-    <script src="https://assets.website-files.com/6267045bbcf1451f09d3ed15/js/webflow.540847fd9.js" type="text/javascript"></script>
 </div>
-    </div>
   )
 }

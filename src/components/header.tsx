@@ -27,7 +27,8 @@ export default function Header() {
                     />
                 </a>
                 <nav role="navigation" className="nav-menu w-nav-menu">
-                    <a href="#" className="nav-link w-nav-link">MINER</a><a href="#" className="nav-link w-nav-link">ABOUT</a><a href="#" className="nav-link w-nav-link">FAQS</a><ConnectMetamask />
+                   <a href="#" className="nav-link w-nav-link">
+                       </a><ConnectMetamask />
                 </nav>
                 <div className="menu-button w-nav-button"><div className="w-icon-nav-menu"></div></div>
             </div>
