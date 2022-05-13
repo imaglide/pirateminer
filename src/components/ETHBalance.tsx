@@ -24,7 +24,7 @@ const fetcher = (library: Web3Provider | undefined, abi: any) => (...args:any) =
 
 
 export default function ETHBalance() {
-    const addressContract = "0x78867BbEeF44f2326bF8DDd1941a4439382EF2A7"
+    const addressContract = "0xed24fc36d5ee211ea25a80239fb8c4cfd80f12ee"
 
 
 

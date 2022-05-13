@@ -5,7 +5,7 @@ import { Layout } from '../components/layout'
 import { Web3ReactProvider } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
 import { StyledEngineProvider } from '@mui/material/styles';
-import theme from '../components/theme'
+
 
 import styled from "@emotion/styled";
 import "@fontsource/ribeye"
