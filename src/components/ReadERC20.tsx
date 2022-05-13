@@ -28,7 +28,7 @@ const fetcher = (library: Web3Provider | undefined, abi: any) => (...args:any) =
 
 export default function ReadERC20(props: Props) {
     const addressContract = props.addressContract
-    const [symbol, setSymbol] = useState<string>("")
+  
     const [miners, setMiners] = useState<string>()
 
 
@@ -44,6 +44,10 @@ export default function ReadERC20(props: Props) {
 
     const { data: cheese, mutate } = useSWR([addressContract, "getEggsSinceLastHatch", account], {
         fetcher: fetcher(library, abi)
+    })
+
+    const { data: symbol } = useSWR([addressContract, "symbol"], {
+        fetcher: fetcher(library, abi),
     })
 
 
@@ -123,7 +127,7 @@ export default function ReadERC20(props: Props) {
   <Flex  height='80px' justifyContent="right">
         <Text fontSize='2xl'>Contract Balance</Text></Flex>
   <Flex height='80px'justifyContent="right"> 
-        <Text fontSize='2xl'>{parseFloat(formatEther(displayBalance)).toFixed(3)} BNB</Text>
+        <Text fontSize='2xl'>{parseFloat(formatEther(displayBalance)).toFixed(3)} {Symbol}</Text>
   </Flex>
   <Flex height='80px' justifyContent="right"> 
         <Text fontSize='2xl'>Your The Cheeze</Text></Flex>
@@ -134,13 +138,13 @@ export default function ReadERC20(props: Props) {
         <Text fontSize='2xl'>Pending Awards</Text>
   </Flex>
   <Flex  height='80px' justifyContent="right"> 
-        <Text fontSize='2xl' >{parseFloat(formatEther(displayRewards)).toFixed(6)} BNB</Text>
+        <Text fontSize='2xl' >{parseFloat(formatEther(displayRewards)).toFixed(6)} {Symbol}</Text>
   </Flex>
 </SimpleGrid>
 <Divider style={{ background: 'black' }} variant="middle" />
 <SimpleGrid columns={1}  >
   <Flex height='80px' justifyContent="right">
-        <Input variant='filled' placeholder='0 BNB'/>
+        <Input variant='filled' placeholder='0 BUSD'/>
         </Flex>
   <Flex height='80px'justifyContent="right"> 
         <Button isFullWidth={true} onClick={onClickBuyMice}>Buy Cheeze</Button>
