@@ -9,6 +9,8 @@ import { formatAddress } from '../utils/helpers'
 import { formatEther } from "@ethersproject/units";
 import ETHBalance from './ETHBalance'
 
+
+
 const ConnectMetamask = () => {
 
    
@@ -50,7 +52,7 @@ const ConnectMetamask = () => {
               <ETHBalance/>
             </Text>
           </Box>
-          <Button
+          <Button onClick={onClickDisconnect}
             bg="gray.800"
             border="1px solid transparent"
             _hover={{

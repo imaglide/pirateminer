@@ -15,20 +15,15 @@ interface Props {
 }
 declare let window: any;
 
-const fetcher = (library: Web3Provider, abi?: any) => (...args: any) => {
+const fetcher = (library: Web3Provider | undefined, abi: any) => (...args:any) => {
+    if (!library) return
 
     const [arg1, arg2, ...params] = args
-    if (isAddress(arg1)) {
-        const address = arg1
-        const method = arg2
-        const contract = new Contract(address, abi, library)
-        return contract[method](...params)
-    }
-    const method = arg1;
-
-    return library[method](arg2, ...params)
-
-}
+    const address = arg1
+    const method = arg2
+    const contract = new Contract(address, abi, library)
+    return contract[method](...params)
+  }
 
 
 export default function ReadERC20(props: Props) {
@@ -39,11 +34,11 @@ export default function ReadERC20(props: Props) {
 
     const { account, active, library } = useWeb3React<Web3Provider>()
 
-    const { data: balance } = useSWR(["getBalance", addressContract, 'latest'], {
+    const { data: balance } = useSWR([addressContract, "getBalance"], {
         fetcher: fetcher(library, abi),
     })
 
-    const { data: rewards } = useSWR([addressContract, "cheezRewards", account], {
+    const { data: rewards } = useSWR([addressContract, "getAvailableEarnings", account], {
         fetcher: fetcher(library, abi)
     })
 
@@ -51,28 +46,7 @@ export default function ReadERC20(props: Props) {
         fetcher: fetcher(library, abi)
     })
 
-    useEffect(() => {
-        if (!(active && account && library)) return
-        console.log('still alive')
 
-        const erc20: Contract = new Contract(addressContract, abi, library);
-        library.getCode(addressContract).then((result: string) => {
-            //check whether it is a contract
-            if (result === '0x') return
-
-            //   erc20.symbol().then((result:string)=>{
-            //       setSymbol(result)
-            //   }).catch('error', console.error)
-
-
-        })
-
-        erc20.getMyMiners(account).then((result: string) => {
-            setMiners(parseFloat((result)).toLocaleString())
-        }).catch('error', console.error);
-
-        //called only when changed to active
-    }, [active])
 
     useEffect(() => {
         if (!(active && account && library)) return
@@ -131,7 +105,7 @@ export default function ReadERC20(props: Props) {
     let displayMiners: string = "0";
 
     if (balance)
-        displayBalance = balance;
+          displayBalance = balance;
     if (rewards)
         displayRewards = rewards;
     if (cheese)
@@ -169,7 +143,7 @@ export default function ReadERC20(props: Props) {
         <Input variant='filled' placeholder='0 BNB'/>
         </Flex>
   <Flex height='80px'justifyContent="right"> 
-        <Button isFullWidth="true" onClick={onClickBuyMice}>Buy Cheeze</Button>
+        <Button isFullWidth={true} onClick={onClickBuyMice}>Buy Cheeze</Button>
   </Flex>
  
 </SimpleGrid>
