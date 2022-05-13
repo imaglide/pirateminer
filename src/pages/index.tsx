@@ -10,7 +10,7 @@ import About from '../components/about'
 import Faq from '../components/faq'
 
 
-const addressContract='0x55BABe225652faD1747d8642621c6A20E360E919'
+const addressContract='0xc3b6538bE495f038aE5C6DA568C7a039B16E0f7a'
 
 const Home: NextPage = () => {
   return (
