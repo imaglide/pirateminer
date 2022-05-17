@@ -1,46 +1,53 @@
-import { useEffect } from 'react'
+import { useEffect } from "react";
 
-import { useWeb3React } from '@web3-react/core'
-import { Web3Provider } from '@ethersproject/providers'
-import { Box, Button, Text} from '@chakra-ui/react'
-import { injected } from '../utils/connectors'
-import { UserRejectedRequestError } from '@web3-react/injected-connector'
-import { formatAddress } from '../utils/helpers'
+import { useWeb3React } from "@web3-react/core";
+import { Web3Provider } from "@ethersproject/providers";
+import { Box, Button, Text } from "@chakra-ui/react";
+import { injected } from "../utils/connectors";
+import { UserRejectedRequestError } from "@web3-react/injected-connector";
+import { formatAddress } from "../utils/helpers";
 import { formatEther } from "@ethersproject/units";
-import ETHBalance from './ETHBalance'
-
-
+import ETHBalance from "./ETHBalance";
 
 const ConnectMetamask = () => {
+  const {
+    chainId,
+    account,
+    activate,
+    deactivate,
+    setError,
+    active,
+    library,
+    connector,
+  } = useWeb3React<Web3Provider>();
 
-   
-
-    const { chainId, account, activate,deactivate, setError, active,library ,connector, } = useWeb3React<Web3Provider>()
-    
-
-    const onClickConnect = () => {
-      activate(injected,(error) => {
+  const onClickConnect = () => {
+    activate(
+      injected,
+      (error) => {
         if (error instanceof UserRejectedRequestError) {
           // ignore user rejected error
-          console.log("user refused")
+          console.log("user refused");
         } else {
-          setError(error)
+          setError(error);
         }
-      }, false)
-    }
+      },
+      false
+    );
+  };
 
-    const onClickDisconnect = () => {
-        deactivate()
-      }
+  const onClickDisconnect = () => {
+    deactivate();
+  };
 
-    useEffect(() => {
-      console.log(chainId, account, active,library,connector)
-    })
+  useEffect(() => {
+    console.log(chainId, account, active, library, connector);
+  });
 
-    return (
-        <div>
-        {active && typeof account === 'string' ? (
-          <Box
+  return (
+    <div>
+      {active && typeof account === "string" ? (
+        <Box
           display="flex"
           alignItems="center"
           background="gray.700"
@@ -49,10 +56,11 @@ const ConnectMetamask = () => {
         >
           <Box px="3">
             <Text color="white" fontSize="md">
-              <ETHBalance/>
+              <ETHBalance />
             </Text>
           </Box>
-          <Button onClick={onClickDisconnect}
+          <Button
+            onClick={onClickDisconnect}
             bg="gray.800"
             border="1px solid transparent"
             _hover={{
@@ -67,7 +75,6 @@ const ConnectMetamask = () => {
             height="38px"
           >
             <Text color="white" fontSize="md" fontWeight="medium" mr="2">
-             
               {account &&
                 `${account.slice(0, 6)}...${account.slice(
                   account.length - 4,
@@ -76,12 +83,11 @@ const ConnectMetamask = () => {
             </Text>
           </Button>
         </Box>
-        ) : (
-            <Button onClick={onClickConnect}>Connect Wallet</Button>
+      ) : (
+        <Button onClick={onClickConnect}>Connect Wallet</Button>
+      )}
+    </div>
+  );
+};
 
-        )}
-        </div>
-    )
-  }
-
-export default ConnectMetamask
+export default ConnectMetamask;

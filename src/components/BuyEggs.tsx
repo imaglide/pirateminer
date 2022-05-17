@@ -29,11 +29,7 @@ export default function BuyEggs(props:Props){
     console.log("Amount",amount)
     console.log("Account",account)
     console.log("parsed Amount",(parseEther(amount)).toString())
-
-
-
   
-    
     
     erc20.buyEggs(account,parseEther(amount)).catch('error', console.error)
   }
