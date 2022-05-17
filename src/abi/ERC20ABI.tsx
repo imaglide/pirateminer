@@ -3,6 +3,25 @@ export const ERC20ABI = [
 		"inputs": [
 			{
 				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "approveSpend",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
 				"name": "value",
 				"type": "uint256"
 			}
@@ -465,6 +484,25 @@ export const ERC20ABI = [
 	{
 		"inputs": [],
 		"name": "EGGS_TO_HIRE_1MINERS",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_value",
+				"type": "address"
+			}
+		],
+		"name": "getAllowance",
 		"outputs": [
 			{
 				"internalType": "uint256",

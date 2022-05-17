@@ -62,6 +62,8 @@ export default function ETHBalance() {
 
   let displayBalance: number = 0;
 
+  console.log("symbol",symbol)
+
   if (balance) displayBalance = balance;
 
   return (
