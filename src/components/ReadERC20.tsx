@@ -22,11 +22,12 @@ import {
   NumberInput,
   NumberInputField,
   Box,
-  Heading
+  Heading,
 } from "@chakra-ui/react";
 import ETHBalance from "./ETHBalance";
 import BuyEggs from "./BuyEggs";
-import ClaimEggs from "./ClaimEggs"
+import ClaimEggs from "./ClaimEggs";
+import ApproveContractSpend from "./ApproveContractSpend";
 
 interface Props {
   addressContract: string;
@@ -39,9 +40,11 @@ const fetcher =
     if (!library) return;
 
     const [arg1, arg2, ...params] = args;
+   
     console.log("arg1", arg1);
     console.log("arg2", arg2);
     console.log("params", params);
+  
 
     const address = arg1;
     const method = arg2;
@@ -50,9 +53,9 @@ const fetcher =
   };
 
 export default function ReadERC20(props: Props) {
-
-  
   const addressContract = props.addressContract;
+  const addressBUSD = "0xed24fc36d5ee211ea25a80239fb8c4cfd80f12ee";
+  
 
   const { account, active, library } = useWeb3React<Web3Provider>();
 
@@ -67,17 +70,23 @@ export default function ReadERC20(props: Props) {
     }
   );
 
+  const { data: allowance} = useSWR([addressContract, "getAllowance", account], {
+    fetcher: fetcher(library, abi),
+  });
+
+  const { data: symbol } = useSWR([addressBUSD, "symbol"], {
+    fetcher: fetcher(library, abi),
+  });
+
 
   useEffect(() => {
     if (!(active && account && library)) return;
 
-    const erc20: Contract = new Contract(addressContract, abi, library);
-
-    // listen for changes on an Ethereum address
+       // listen for changes on an Ethereum address
 
     library.on("block", () => {
       // update balance, rewards and cheeze every block
-      mutate(undefined, true)
+      //mutate(undefined, true);
     });
 
     //remove listener when the component is unmounted
@@ -88,7 +97,6 @@ export default function ReadERC20(props: Props) {
 
     // trigger the effect only on component mount
   }, [active, account]);
-
 
   const onClickClaimRewards = async () => {
     console.log("claim");
@@ -103,21 +111,29 @@ export default function ReadERC20(props: Props) {
     });
   };
 
-  console.log("balance",balance)
+ 
 
   let displayBalance: number = 0;
   let displayAvailableEarnings: number = 0;
+  let displayAllowance: number = 0;
   let displayCheese: number = 0;
   let displayMiners: string = "0";
-  let displayEggYield:number =0;
+  let displayEggYield: number = 0;
 
   if (balance) displayBalance = balance;
   // if (rewards)
   //       displayRewards = rewards;
   if (availableEarnings) displayAvailableEarnings = availableEarnings;
+
+  if (allowance) displayAllowance = allowance;
+
   //   if (miners)
   //      displayMiners = miners;
-  
+
+
+  console.log("balance", parseFloat(formatEther(displayBalance)).toFixed(3));
+  console.log("allowance",parseFloat(formatEther(displayAllowance)).toFixed(3))
+  console.log("symbol",symbol)
 
   return (
     <Container>
@@ -128,7 +144,7 @@ export default function ReadERC20(props: Props) {
 
         <Flex height="80px" justifyContent="right">
           <Text fontSize="2xl">
-            {parseFloat(formatEther(displayBalance)).toFixed(3)} BUSD
+            {parseFloat(formatEther(displayBalance)).toFixed(3)} {symbol}
           </Text>
         </Flex>
         <Flex height="80px" justifyContent="left">
@@ -144,23 +160,30 @@ export default function ReadERC20(props: Props) {
         </Flex>
         <Flex height="80px" justifyContent="right">
           <Text fontSize="2xl" justifyContent="right">
-            {displayEggYield} 
+            {displayEggYield}
           </Text>
         </Flex>
         <Flex height="80px" justifyContent="right">
           <Text fontSize="2xl" justifyContent="right">
-            <ClaimEggs addressContract={addressContract} />
+            <ClaimEggs
+              addressContract={addressContract}
+              amountOfEggs={displayEggYield}
+            />
           </Text>
         </Flex>
-        
       </SimpleGrid>
 
       <Divider style={{ background: "black" }} variant="middle" />
 
-      <Box  my={4} p={4} w='100%' borderWidth="1px" borderRadius="lg">
-           <BuyEggs addressContract={addressContract} />
-    </Box>
-
+      {active && !allowance ? (
+        <Box my={4} p={4} w="100%" borderWidth="1px" borderRadius="lg">
+          <ApproveContractSpend addressContract={addressContract} />
+        </Box>
+      ) : (
+        <Box my={4} p={4} w="100%" borderWidth="1px" borderRadius="lg">
+          <BuyEggs addressContract={addressContract} />
+        </Box>
+      )}
     </Container>
   );
 }
